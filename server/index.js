@@ -7,16 +7,19 @@ const port = process.env.PORT || 3005;
 
 app.use(express.json());
 
-const whitelist = ['http://localhost:3000', 'https://localhost:3000'];
-const options = {
-  origin: (origin, callback) => {
-    if (whitelist.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed'));
-    }
-  }
-}
+
+const whitelist = [
+  'http://localhost:3000',
+];
+const corsOptions = {
+  origin: function(origin, callback){
+      const originIsWhitelisted = whitelist.indexOf(origin) !== -1;
+      callback(null, originIsWhitelisted);
+  },
+  credentials: true
+};
+app.use(cors(corsOptions));
+
 
 app.get('/', (req, res) => {
   res.send('Express Server Running!');
@@ -24,9 +27,6 @@ app.get('/', (req, res) => {
 
 // Router
 routerApi(app);
-
-// Cors
-app.use(cors(options));
 
 // Middlewares
 app.use(logErrors);
