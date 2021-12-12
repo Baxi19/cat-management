@@ -61,14 +61,10 @@ passport:
 admin123
 ```
 
-# Run server
+# Run server in developmment
 ```
 npm run dev
 ```
-
-
-
-
 
 
 # Close all containers
