@@ -144,6 +144,7 @@ const InsertCat = forwardRef((props, ref) => {
                 <div align="right">
                     <Button
                         color="error"
+                        variant="contained"
                         className={styles.buttonCancelModal}
                         onClick={props.showCloseCatModal}
                         startIcon={<CancelIcon />}
@@ -152,6 +153,7 @@ const InsertCat = forwardRef((props, ref) => {
                     </Button>
                     <Button
                         color="success"
+                        variant="contained"
                         className={styles.buttonAddModal}
                         onClick={() => {
                             formik.handleSubmit();

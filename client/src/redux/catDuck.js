@@ -5,6 +5,7 @@ const initialData = {
   array: [],
   modalInsert: false,
   modalEdit: false,
+  modalGps: false,
   filter: "",
   itemSelected: {
     id: 0,
@@ -13,19 +14,24 @@ const initialData = {
     description: "",
     latitude: "",
     longitude: "",
-    image: ""
+    image: "",
   },
+  position: { lat: 10.471673707651417, lng: -84.6451719761451 },
+  isMarkerShown: false,
 };
 
 //******************************TYPES******************************
 const GET_CAT_INFO = "GET_CAT_INFO";
 const SHOW_CLOSE_CAT_MODAL = "SHOW_CLOSE_CAT_MODAL";
 const SHOW_CLOSE_CAT_MODAL_EDIT = "SHOW_CLOSE_CAT_MODAL_EDIT";
+const SHOW_CLOSE_CAT_MODAL_GPS = "SHOW_CLOSE_CAT_MODAL_GPS";
 const SET_FILTER_CAT = "SET_FILTER_CAT";
 const ADD_CAT = "ADD_CAT";
 const DELETE_CAT = "DELETE_CAT";
 const SET_CAT_SELECTED_INFO = "SET_CAT_SELECTED_INFO";
 const UPDATE_CAT = "UPDATE_CAT";
+const SET_POSITION = "SET_POSITION";
+
 
 //******************************REDUCER******************************
 export default function catReducer(state = initialData, action) {
@@ -44,6 +50,11 @@ export default function catReducer(state = initialData, action) {
       return {
         ...state,
         modalEdit: action.payload,
+      };
+    case SHOW_CLOSE_CAT_MODAL_GPS:
+      return {
+        ...state,
+        modalGps: action.payload,
       };
     case SET_FILTER_CAT:
       return {
@@ -72,6 +83,11 @@ export default function catReducer(state = initialData, action) {
         array: action.payload.array,
         modalEdit: action.payload.modalEdit,
       };
+    case SET_POSITION:
+      return {
+        ...state,
+        position: action.payload,
+      };
 
     default:
       return state;
@@ -79,6 +95,16 @@ export default function catReducer(state = initialData, action) {
 }
 
 //******************************ACTIONS******************************
+export const setPositionActions = (latitude, longitude) => (dispatch, getState) => {
+  try {
+    dispatch({
+      type: SET_POSITION,
+      payload: { lat: latitude, lng: longitude },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
 export const showCloseCatModalActions = () => (dispatch, getState) => {
   const { modalInsert } = getState().cat;
   try {
@@ -97,6 +123,18 @@ export const showCloseCatModalEditActions = () => (dispatch, getState) => {
     dispatch({
       type: SHOW_CLOSE_CAT_MODAL_EDIT,
       payload: !modalEdit,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const showCloseCatModalGpsActions = () => (dispatch, getState) => {
+  const { modalGps } = getState().cat;
+  try {
+    dispatch({
+      type: SHOW_CLOSE_CAT_MODAL_GPS,
+      payload: !modalGps,
     });
   } catch (error) {
     console.log(error);
@@ -132,7 +170,6 @@ export const getCatInfoActions = () => async (dispatch, getState) => {
   }
 };
 
-
 export const addCatActions = (item) => async (dispatch, getState) => {
   const { array } = getState().cat;
   try {
@@ -146,23 +183,23 @@ export const addCatActions = (item) => async (dispatch, getState) => {
           array: array,
         },
       });
-    } 
+    }
   } catch (error) {
     console.log(error);
   }
 };
 
 export const setCatSelectedActions = (itemSelected) => (dispatch, getState) => {
-    try {
-      dispatch({
-        type: SET_CAT_SELECTED_INFO,
-        payload: {
-          itemSelected: itemSelected,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
+  try {
+    dispatch({
+      type: SET_CAT_SELECTED_INFO,
+      payload: {
+        itemSelected: itemSelected,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const updateCatActions = (cat, id) => async (dispatch, getState) => {
@@ -180,12 +217,11 @@ export const updateCatActions = (cat, id) => async (dispatch, getState) => {
           },
         });
       });
-    } 
+    }
   } catch (error) {
     console.log(error);
   }
 };
-
 
 export const deleteCatActions = (id) => async (dispatch, getState) => {
   try {
@@ -198,7 +234,7 @@ export const deleteCatActions = (id) => async (dispatch, getState) => {
           array: cats.data,
         },
       });
-    } 
+    }
   } catch (error) {
     console.log(error);
   }

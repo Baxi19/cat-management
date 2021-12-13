@@ -43,11 +43,13 @@ const DeleteCat = forwardRef((props, ref) => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={handleClose} className={styles.buttonCancelModal}>
+                    <Button color="error" variant="contained" onClick={handleClose} className={styles.buttonCancelModal}>
                         Cancel
                     </Button>
                     <Button
+                        color="success"
                         className={styles.buttonAddModal}
+                        variant="contained"
                         autoFocus
                         onClick={() => {
                             handleDeleteCat();

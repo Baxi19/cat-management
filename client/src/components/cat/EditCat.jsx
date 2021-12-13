@@ -157,6 +157,7 @@ const EditCat = forwardRef((props, ref) => {
                 <div align="right">
                     <Button
                         color="error"
+                        variant="contained"
                         className={styles.buttonCancelModal}
                         onClick={props.showCloseCatModalEdit}
                         startIcon={<CancelIcon />}
@@ -164,6 +165,7 @@ const EditCat = forwardRef((props, ref) => {
                         Cancel
                     </Button>
                     <Button
+                        variant="contained"
                         color="success"
                         className={styles.buttonAddModal}
                         onClick={() => {
@@ -171,7 +173,7 @@ const EditCat = forwardRef((props, ref) => {
                         }}
                         startIcon={<SaveIcon />}
                     >
-                        Add
+                        Save
                     </Button>
                 </div>
             </div>

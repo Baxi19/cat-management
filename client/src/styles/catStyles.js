@@ -22,14 +22,14 @@ export const catStyles = makeStyles((theme) => ({
       marginLeft: "0.8rem",
       marginTop: "0.8rem",
       color: "success",
-      margin: "10px",
+      marginBottom: "0.8rem",
     },
   
     buttonCancelModal: {
       marginLeft: "0.8rem",
       marginTop: "0.8rem",
       color: "error",
-      margin: "10px",
+      marginBottom: "0.8rem",
     },
   
     buttonDelete: {

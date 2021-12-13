@@ -1,10 +1,10 @@
+import './styles/index.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import generateStore from "./redux/store";
 import axios from 'axios';
-import './index.css';
 import { apiUrl } from './constants';
 import App from './app/App';
 

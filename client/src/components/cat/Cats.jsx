@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -6,8 +6,9 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import CardCat from './CardCat';
 import InsertCat from './InsertCat';
-import { getCatInfoActions, showCloseCatModalActions, showCloseCatModalEditActions, setCatSelectedActions, updateCatActions, deleteCatActions } from "../../redux/catDuck";
 import EditCat from "./EditCat";
+import Map from '../shared/Map';
+import { setPositionActions, getCatInfoActions, showCloseCatModalActions, showCloseCatModalEditActions,showCloseCatModalGpsActions ,setCatSelectedActions, updateCatActions, deleteCatActions } from "../../redux/catDuck";
 
 const Cats = () => {
     const dispatch = useDispatch();
@@ -15,20 +16,14 @@ const Cats = () => {
     const [cats, setCats] = useState(useSelector((store) => store.cat.array));
     const modalInsert = useSelector((store) => store.cat.modalInsert);
     const modalEdit = useSelector((store) => store.cat.modalEdit);
-    const [search, setSearch] = useState("");
-    
-    const filter = useMemo(() => 
-        listCats.filter((role) => {
-            return role.name.toLowerCase().includes(search.toLowerCase());
-        }),
-        [listCats, search]
-    );
+    const [gps, setGps] = useState(useSelector((store) => store.cat.position));
+    const isMarkerShown = useSelector((store) => store.cat.isMarkerShown);
+    const position = useSelector((store) => store.cat.position);
 
     const getCatsInfo = () => {
         dispatch(getCatInfoActions());
         setCats(listCats);
     };
-
 
     const showCloseCatModal = () => {
         dispatch(showCloseCatModalActions());
@@ -38,19 +33,27 @@ const Cats = () => {
         dispatch(showCloseCatModalEditActions());
     };
     
+    const showCloseCatModalGps = () => {
+        dispatch(showCloseCatModalGpsActions());
+    };
+    
     const updateList = () => {
         setCats(listCats);
     };
 
-    const selectCat = (cat, type) => {
+    const selectCat = (cat) => {
         dispatch(setCatSelectedActions(cat));
-        type === "Edit" && showCloseCatModalEdit();
+        showCloseCatModalEdit();
     };
     
     const deleteCat = (id) => {
         dispatch(deleteCatActions(id));
     };
 
+    const updateGps = (lat, lng) => {
+        dispatch(setPositionActions(lat, lng));
+    }
+    
     useEffect( () => {
         setCats([]);
         async function fetchData() {
@@ -82,8 +85,8 @@ const Cats = () => {
                     item xs 
                     spacing={1}
                     >
-                    {filter && 
-                        filter.map((item, i) => 
+                    {listCats && 
+                        listCats.map((item, i) => 
                         <Box m={1} key={i}>
                             <CardCat 
                                 key={item} 
@@ -91,6 +94,7 @@ const Cats = () => {
                                 selectCat={selectCat}
                                 updateCatActions={updateCatActions}
                                 deleteCat={deleteCat}
+                                updateGps={updateGps}
                             />
                         </Box> 
                     )}
