@@ -3,13 +3,15 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteCat from './DeleteCat';
+import SearchIcon from '@mui/icons-material/Search';
 
 const CardCat = (props) => {
     return (
         <>
-           <Card sx={{ width: 300, margin: "16px" }}>
+           <Card key={props.item.id} sx={{ width: 300, margin: "10px" }}>
                 <CardMedia
                     component="img"
                     alt={props.item.name}
@@ -25,8 +27,15 @@ const CardCat = (props) => {
                     </Typography>
                 </CardContent>
                 <CardActions>
-                    <Button size="small">Localize</Button>
-                    <Button size="small">Learn More</Button>
+                    <SearchIcon onClick={() => {
+
+                    }}/>
+                    <EditIcon onClick={() => {
+                        props.selectCat(props.item, "Edit");
+                    }}/>
+
+                    <DeleteCat deleteCat={props.deleteCat} item={props.item}/>
+                    
                 </CardActions>
             </Card> 
         </>

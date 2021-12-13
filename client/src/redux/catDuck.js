@@ -9,6 +9,11 @@ const initialData = {
   itemSelected: {
     id: 0,
     name: "",
+    breed: "",
+    description: "",
+    latitude: "",
+    longitude: "",
+    image: ""
   },
 };
 
@@ -74,9 +79,6 @@ export default function catReducer(state = initialData, action) {
 }
 
 //******************************ACTIONS******************************
-
-
-
 export const showCloseCatModalActions = () => (dispatch, getState) => {
   const { modalInsert } = getState().cat;
   try {
@@ -130,39 +132,18 @@ export const getCatInfoActions = () => async (dispatch, getState) => {
   }
 };
 
-/*
 
 export const addCatActions = (item) => async (dispatch, getState) => {
+  const { array } = getState().cat;
   try {
-    let response = await axios.post(`Role`, item);
-    if (response.status === 200) {
+    let response = await axios.post(`cats`, item);
+    if (response.status === 201) {
       array.push(response.data);
       dispatch({
         type: ADD_CAT,
         payload: {
           modalInsert: false,
           array: array,
-        },
-      });
-    } 
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const deleteCatActions = (id) => async (dispatch, getState) => {
-  const { idToken } = getState().auth;
-  const headers = { headers: { Authorization: `Bearer ${idToken}` } };
-
-  try {
-    let response = await axios.delete(`Role/${id}`, headers);
-    if (response.status === 200) {
-      let roles = await axios.get(`Role`, headers);
-      dispatch({
-        type: DELETE_CAT,
-        payload: {
-          array: roles.data,
-          page_number: 1,
         },
       });
     } 
@@ -182,14 +163,15 @@ export const setCatSelectedActions = (itemSelected) => (dispatch, getState) => {
     } catch (error) {
       console.log(error);
     }
-  };
+};
 
-export const updateCatActions = (role) => async (dispatch, getState) => {
-  const { modalEdit } = getState().cat;
+export const updateCatActions = (cat, id) => async (dispatch, getState) => {
+  const { modalEdit, itemSelected } = getState().cat;
   try {
-    let res = await axios.patch(`Role/${role.id}`, role, headers);
+    console.log(cat);
+    let res = await axios.patch(`cats/${itemSelected.id}`, cat);
     if (res.status === 200) {
-      await axios.get(`Role`, headers).then((response) => {
+      await axios.get(`cats`).then((response) => {
         dispatch({
           type: UPDATE_CAT,
           payload: {
@@ -203,4 +185,21 @@ export const updateCatActions = (role) => async (dispatch, getState) => {
     console.log(error);
   }
 };
-*/
+
+
+export const deleteCatActions = (id) => async (dispatch, getState) => {
+  try {
+    let response = await axios.delete(`cats/${id}`);
+    if (response.status === 200) {
+      let cats = await axios.get(`cats`);
+      dispatch({
+        type: DELETE_CAT,
+        payload: {
+          array: cats.data,
+        },
+      });
+    } 
+  } catch (error) {
+    console.log(error);
+  }
+};
