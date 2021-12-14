@@ -7,7 +7,6 @@ import Modal from '@mui/material/Modal';
 import CardCat from './CardCat';
 import InsertCat from './InsertCat';
 import EditCat from "./EditCat";
-import Map from '../shared/Map';
 import { setPositionActions, getCatInfoActions, showCloseCatModalActions, showCloseCatModalEditActions,showCloseCatModalGpsActions ,setCatSelectedActions, updateCatActions, deleteCatActions } from "../../redux/catDuck";
 
 const Cats = () => {
@@ -33,10 +32,6 @@ const Cats = () => {
         dispatch(showCloseCatModalEditActions());
     };
     
-    const showCloseCatModalGps = () => {
-        dispatch(showCloseCatModalGpsActions());
-    };
-    
     const updateList = () => {
         setCats(listCats);
     };
@@ -53,7 +48,7 @@ const Cats = () => {
     const updateGps = (lat, lng) => {
         dispatch(setPositionActions(lat, lng));
     }
-    
+
     useEffect( () => {
         setCats([]);
         async function fetchData() {
