@@ -105,6 +105,7 @@ const InsertCat = forwardRef((props, ref) => {
                 }
                 
                 <TextField
+                    type="number"
                     name="latitude"
                     onChange={formik.handleChange}
                     value={formik.values.latitude}
@@ -117,6 +118,7 @@ const InsertCat = forwardRef((props, ref) => {
                 }
                 
                 <TextField
+                    type="number"
                     name="longitude"
                     onChange={formik.handleChange}
                     value={formik.values.longitude}
