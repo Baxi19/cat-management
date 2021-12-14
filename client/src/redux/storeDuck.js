@@ -64,17 +64,17 @@ const initialData = {
     },
     {
       "id": 7,
-      "price": 2,
-      "fruit":"apple",
-      "container_id": 3,
-      "image":"https://www.collinsdictionary.com/images/full/apple_158989157.jpg",
+      "price": 1,
+      "fruit":"orange",
+      "container_id": 2,
+      "image":"https://media.istockphoto.com/photos/orange-fruit-isolated-on-a-white-background-picture-id494037460?k=20&m=494037460&s=612x612&w=0&h=Z4hhSeqbMziYlDlawDjiAMH952vSl_C4KI_lU6aEZ1c=",
     },
     {
       "id": 8,
-      "price": 2,
-      "fruit":"apple",
-      "container_id": 3,
-      "image":"https://www.collinsdictionary.com/images/full/apple_158989157.jpg",
+      "price": 1,
+      "fruit":"orange",
+      "container_id": 2,
+      "image":"https://media.istockphoto.com/photos/orange-fruit-isolated-on-a-white-background-picture-id494037460?k=20&m=494037460&s=612x612&w=0&h=Z4hhSeqbMziYlDlawDjiAMH952vSl_C4KI_lU6aEZ1c=",
     },
     {
       "id": 9,
@@ -89,7 +89,49 @@ const initialData = {
       "fruit":"apple",
       "container_id": 3,
       "image":"https://www.collinsdictionary.com/images/full/apple_158989157.jpg",
-    }, 
+    },
+    {
+      "id": 11,
+      "price": 2,
+      "fruit":"apple",
+      "container_id": 3,
+      "image":"https://www.collinsdictionary.com/images/full/apple_158989157.jpg",
+    },
+    {
+      "id": 12,
+      "price": 2,
+      "fruit":"apple",
+      "container_id": 3,
+      "image":"https://www.collinsdictionary.com/images/full/apple_158989157.jpg",
+    },
+    {
+      "id": 13,
+      "price": 2,
+      "fruit":"apple",
+      "container_id": 4,
+      "image":"https://www.collinsdictionary.com/images/full/apple_158989157.jpg",
+    },
+    {
+      "id": 14,
+      "price": 2,
+      "fruit":"apple",
+      "container_id": 4,
+      "image":"https://www.collinsdictionary.com/images/full/apple_158989157.jpg",
+    },
+    {
+      "id": 15,
+      "price": 2,
+      "fruit":"apple",
+      "container_id": 4,
+      "image":"https://www.collinsdictionary.com/images/full/apple_158989157.jpg",
+    },
+    {
+      "id": 16,
+      "price": 2,
+      "fruit":"apple",
+      "container_id": 4,
+      "image":"https://www.collinsdictionary.com/images/full/apple_158989157.jpg",
+    },  
   ],
 };
 
@@ -99,6 +141,8 @@ const GET_FRUITS = "GET_FRUITS";
 const ADD_CART = "ADD_CART";
 const GET_ALL_FRUITS = "GET_ALL_FRUITS";
 const GET_CART = "GET_CART";
+const ADD_NEW = "ADD_NEW";
+const SET_FRUITS = "SET_FRUITS";
 
 //******************************REDUCER******************************
 export default function catReducer(state = initialData, action) {
@@ -109,6 +153,11 @@ export default function catReducer(state = initialData, action) {
         containers: action.payload.containers,
       };
     case GET_FRUITS:
+      return {
+        ...state,
+        fruits: action.payload.fruits,
+      };
+    case SET_FRUITS:
       return {
         ...state,
         fruits: action.payload.fruits,
@@ -129,6 +178,12 @@ export default function catReducer(state = initialData, action) {
         ...state,
         cart: action.payload.cart,
       };
+    case ADD_NEW:
+      return {
+        ...state,
+        containers: action.payload.containers,
+        fruits: action.payload.fruits,
+      };
     
     default:
       return state;
@@ -136,6 +191,38 @@ export default function catReducer(state = initialData, action) {
 }
 
 //******************************ACTIONS******************************
+export const addNewActions = (price, quantity, name, url) => async (dispatch, getState) => {
+  const { containers, fruits } = getState().store;
+  try {
+    let id = containers.length + 1;
+    let newContainer = {
+      "id": id,
+      "quantity": quantity
+    };
+    let newFruits = fruits;
+    for (let index = 0; index < quantity; index++) {
+      newFruits.push(
+        {
+          "id": newFruits.length + 1,
+          "price": price,
+          "fruit":name,
+          "container_id": id,
+          "image":url,
+        }
+      );
+    }
+    dispatch({
+        type: ADD_NEW,
+        payload: {
+          containers: [...containers, newContainer],
+          fruits: newFruits,
+        },
+    }); 
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const addCartActions = (fruits, buy) => async (dispatch, getState) => {
   const { cart } = getState().store;
   try {
@@ -201,6 +288,19 @@ export const getCartActions = () => async (dispatch, getState) => {
         type: GET_CART,
         payload: {
           cart: cart,
+        },
+    }); 
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const setStoreFruitsActions = (array) => async (dispatch, getState) => {
+  try {
+    dispatch({
+        type: SET_FRUITS,
+        payload: {
+          fruits: array,
         },
     }); 
   } catch (error) {

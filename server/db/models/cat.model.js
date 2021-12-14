@@ -31,7 +31,7 @@ const CatSchema = {
   },
   image: {
       allowNull: false,
-      type: DataTypes.STRING,
+      type: DataTypes.TEXT,
   }
 };
 

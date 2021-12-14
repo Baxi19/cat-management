@@ -140,7 +140,6 @@ const InsertCat = forwardRef((props, ref) => {
                     : null
                 }
 
-
                 <div align="right">
                     <Button
                         color="error"

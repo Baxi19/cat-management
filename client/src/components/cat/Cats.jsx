@@ -7,7 +7,15 @@ import Modal from '@mui/material/Modal';
 import CardCat from './CardCat';
 import InsertCat from './InsertCat';
 import EditCat from "./EditCat";
-import { setPositionActions, getCatInfoActions, showCloseCatModalActions, showCloseCatModalEditActions,showCloseCatModalGpsActions ,setCatSelectedActions, updateCatActions, deleteCatActions } from "../../redux/catDuck";
+import { 
+    setPositionActions, 
+    getCatInfoActions, 
+    showCloseCatModalActions, 
+    showCloseCatModalEditActions, 
+    setCatSelectedActions, 
+    updateCatActions, 
+    deleteCatActions, 
+} from "../../redux/catDuck";
 
 const Cats = () => {
     const dispatch = useDispatch();
@@ -15,9 +23,6 @@ const Cats = () => {
     const [cats, setCats] = useState(useSelector((store) => store.cat.array));
     const modalInsert = useSelector((store) => store.cat.modalInsert);
     const modalEdit = useSelector((store) => store.cat.modalEdit);
-    const [gps, setGps] = useState(useSelector((store) => store.cat.position));
-    const isMarkerShown = useSelector((store) => store.cat.isMarkerShown);
-    const position = useSelector((store) => store.cat.position);
 
     const getCatsInfo = () => {
         dispatch(getCatInfoActions());
