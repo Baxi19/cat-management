@@ -43,7 +43,7 @@ const Container = (props) => {
                 <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                     {cont && 
                         cont.map((item, i) => 
-                            <Grid item xs={6}>
+                            <Grid item xs={3}>
                                 <Item >
                                     <h4>Container #{item.id}</h4>
                                     {

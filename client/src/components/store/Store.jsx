@@ -40,7 +40,7 @@ const Store = () => {
 
     return (
         <>
-            <h1>Store</h1>
+            <h3>Orange Shop</h3>
             <TextField
                 style={{ marginRight: "16px", marginBottom: "16px" }}
                 type="number"
