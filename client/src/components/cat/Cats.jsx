@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -61,7 +61,6 @@ const Cats = () => {
         }
         fetchData();
     }, [cats]);
-
 
     return (
         <>

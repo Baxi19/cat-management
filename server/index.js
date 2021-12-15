@@ -7,21 +7,21 @@ const port = process.env.PORT || 3005;
 
 app.use(express.json());
 
+const whitelist = ['http://localhost:3000', 'https://localhost:3000'];
+const options = {
+  origin: (origin, callback) => {
+    if (whitelist.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed'));
+    }
+  }
+}
+app.use(cors(options));
 
-const whitelist = [
-  'http://localhost:3000',
-];
-const corsOptions = {
-  origin: function(origin, callback){
-      const originIsWhitelisted = whitelist.indexOf(origin) !== -1;
-      callback(null, originIsWhitelisted);
-  },
-  credentials: true
-};
-app.use(cors(corsOptions));
 
 app.get('/', (req, res) => {
-  res.send('Express Server Running!');
+  res.send('<div align="center">Express Server Running 🚀❤️🚀</div>');
 });
 
 // Router

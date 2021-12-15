@@ -1,5 +1,5 @@
-import catStyles from '../../styles/catStyles';
 import { forwardRef, useState } from 'react';
+import catStyles from '../../styles/catStyles';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';

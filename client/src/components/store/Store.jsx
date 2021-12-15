@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Container from './Container';
 import { addNewActions } from '../../redux/storeDuck';
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 
 const Store = () => {
@@ -12,8 +12,7 @@ const Store = () => {
     const [quantity, setQuantity] = useState(1);
     const [fruit, setFruit] = useState("");
     const [image, setImage] = useState("");
-    const cont = useSelector((store) => store.store.containers);
-
+    
     const handleChangePrice = (event) => {
         setPrice(event.target.value < 1
             ? (event.target.value = 1)
@@ -38,10 +37,6 @@ const Store = () => {
     const addNew = (price, quantity, name, url)=>{
         dispatch(addNewActions(price, quantity, name, url));
     }
-
-    useEffect(() => {
-      console.log("Cont updated");
-    }, [cont])
 
     return (
         <>
